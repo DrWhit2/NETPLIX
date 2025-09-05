@@ -1,4 +1,4 @@
-/* 기본 */
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;height:100%;background:#000;color:#fff;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
@@ -18,7 +18,7 @@ a{color:inherit;text-decoration:none}
 .nf-nav a.active,.nf-nav a:hover{background:rgba(255,255,255,.14);color:#fff}
 
 /* Profile */
-.profile-screen{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100dvh;background:#000;padding:56px 20px 40px;gap:12px}
+.profile-screen{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100dvh;background:#000;padding:56px 20px 40px;gap:12pxjustify-content:center;min-height:100svh;padding:calc(56px + env(safe-area-inset-top)) 20px 40px;}
 .profile-title{font-size:clamp(20px,2.8vw,24px);font-weight:500;margin:0 0 6px}
 .profile-list{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:0}
 .profile{width:140px;padding:12px;border-radius:14px;background:#111;border:1px solid #242424;display:flex;flex-direction:column;gap:8px;align-items:center}
@@ -27,7 +27,7 @@ a{color:inherit;text-decoration:none}
 .profile:hover{outline:2px solid #e50914}
 
 /* Banner */
-.nf-banner{position:relative;z-index:20;height:clamp(420px,60vh,680px);display:flex;align-items:flex-end;background:#111 center/cover no-repeat;padding:28px 22px 38px;overflow:hidden}
+.nf-banner{position:relative;z-index:20;height:clamp(420px,60vh,680px);display:flex;align-items:flex-end;background:#111 center/contain no-repeat;padding:28px 22px 38px;overflow:hidden}
 .nf-banner::before{content:"";position:absolute;inset:0;z-index:0;background:rgba(0,0,0,.22)}
 .nf-banner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:48%;z-index:0;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.88) 100%)}
 .banner-content{position:relative;z-index:1;max-width:min(1100px,92vw);margin-inline:auto}
@@ -105,3 +105,50 @@ a{color:inherit;text-decoration:none}
 .rows{position:relative;z-index:10}
 .nf-banner{z-index:20}
 #overlay{z-index:50}
+
+
+/* === Custom fixes (2025-09-05) === */
+
+/* Pillarbox side focus: subtle grayscale side margins across the viewport */
+:root{ --pillar: clamp(10px, 3.5vw, 48px); }
+body::before,
+body::after{
+  content:"";
+  position:fixed; top:0; bottom:0; width:var(--pillar);
+  pointer-events:none; z-index:5;
+  /* Soft grayscale fade to add visual focus toward center */
+  background:linear-gradient(to right, rgba(255,255,255,0.08), rgba(255,255,255,0));
+}
+body::after{
+  right:0; left:auto;
+  transform:scaleX(-1);
+}
+
+/* Ensure the large top banner shows full image without horizontal cropping */
+.nf-banner{ background-color:#000; }
+@media (min-width: 0px){
+  .nf-banner{ background-position:center center; background-repeat:no-repeat; }
+}
+
+/* Profile selection: keep content perfectly centered even on short viewports */
+.profile-screen{ align-items:center; text-align:center; gap:16px; }
+.profile-title{ margin-bottom:10px; }
+.profile-list{ margin-top:8px; }
+
+/* Modal episode list: improve mobile layout and spacing */
+.modal-body{ padding: clamp(18px, 4vw, 28px); }
+.ep{ align-items:flex-start; }
+.ep-title{ line-height:1.35; }
+.ep-desc{ text-align:left; word-break:keep-all; }
+
+@media (max-width: 560px){
+  .modal{ width: min(960px, 96vw); }
+  .modal-body{ padding: 18px; }
+  .ep{ grid-template-columns: 24px min(42vw, 160px) 1fr; gap:10px; }
+  .ep-thumb{ width: min(42vw, 160px); height: auto; aspect-ratio: 16/9; }
+  .ep-body{ padding-right:6px; }
+  .ep-desc{ font-size: .98rem; line-height:1.6; }
+}
+
+/* Respect safe areas on mobile */
+.nf-header{ padding-left: max(16px, env(safe-area-inset-left)); padding-right:max(16px, env(safe-area-inset-right)); }
