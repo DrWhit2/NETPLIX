@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Netflix UI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- 프로필 선택 -->
+  <section id="profile-screen" class="profile-screen" aria-label="프로필 선택">
+    <h1 class="profile-title">관람할 프로필을 선택해 주세요</h1>
+    <div class="profile-list">
+      <button type="button" class="profile">
+        <img src="images/pp.png" alt="프로필 1" />
+        <span>프로필 1</span>
+      </button>
+      <button type="button" class="profile">
+        <img src="images/pp.png" alt="프로필 2" />
+        <span>프로필 2</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 앱 -->
+  <div id="app" hidden>
+    <header class="nf-header">
+      <a href="#" class="logo" aria-label="Netflix">NETFLIX</a>
+      <nav class="nf-nav" aria-label="주요">
+        <a id="nav-home" href="#" class="active">홈</a>
+        <a id="nav-series" href="#">시리즈</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- 홈 -->
+      <section id="home-view" aria-label="홈">
+        <div class="nf-banner" role="img" aria-label="대표 배너">
+          <div class="banner-inner banner-content">
+            <h2 id="banner-title"></h2>
+            <p id="banner-overview"></p>
+            <div class="banner-meta">
+              <span id="banner-match"></span>
+              <span id="banner-year"></span>
+              <span id="banner-age"></span>
+            </div>
+            <div class="banner-actions">
+              <button id="banner-play" class="btn btn-primary">▶ 재생</button>
+              <button id="banner-info" class="btn btn-secondary">ℹ 상세 정보</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="row rows" aria-label="지금 뜨는 콘텐츠">
+          <h3>지금 뜨는 콘텐츠</h3>
+          <div id="row-trending" class="scroller"></div>
+        </section>
+
+        <section class="row rows" aria-label="내가 찜한 콘텐츠">
+          <h3>내가 찜한 콘텐츠</h3>
+          <div id="row-top" class="scroller"></div>
+        </section>
+
+        <section class="row rows" aria-label="추천 콘텐츠">
+          <h3>추천 콘텐츠</h3>
+          <div id="row-sf" class="scroller"></div>
+        </section>
+      </section>
+
+      <!-- 시리즈 -->
+      <section id="series-view" aria-label="시리즈" hidden>
+        <div id="series-banner" class="nf-banner" role="img" aria-label="시리즈 대표 배너">
+          <div class="banner-inner banner-content">
+            <h2 id="series-banner-title"></h2>
+            <p id="series-banner-overview"></p>
+            <div class="banner-meta">
+              <span id="series-banner-match"></span>
+              <span id="series-banner-year"></span>
+              <span id="series-banner-age"></span>
+            </div>
+            <div class="banner-actions">
+              <button id="series-banner-play" class="btn btn-primary">▶ 재생</button>
+              <button id="series-banner-info" class="btn btn-secondary">ℹ 상세 정보</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="row rows" aria-label="시리즈 목록">
+          <h3>시리즈</h3>
+          <div id="series-grid" class="scroller"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <!-- 모달 -->
+  <div id="overlay" class="overlay" hidden aria-modal="true" role="dialog" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal-hero">
+        <img id="modal-backdrop" alt="작품 배경 이미지" />
+        <div class="hero-tint"></div>
+        <div class="hero-topbar">
+          <button id="modal-close" class="icon-btn" aria-label="닫기">✕</button>
+        </div>
+        <div class="hero-body">
+          <div class="titlepack">
+            <h3 id="modal-title"></h3>
+            <div class="badge-set">
+              <span class="badge match" id="modal-match"></span>
+              <span class="badge" id="modal-year"></span>
+              <span class="badge" id="modal-age"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body modal-grid">
+        <div id="grid-top" class="grid-top"></div>
+
+        <section class="grid-overview">
+          <h4 class="sec-title">소개</h4>
+          <p id="modal-overview"></p>
+        </section>
+
+        <section class="grid-facts">
+          <h4 class="sec-title">상세</h4>
+          <dl class="facts">
+            <dt class="dt-cast">출연</dt><dd id="modal-cast"></dd>
+            <dt>장르</dt><dd id="modal-genres"></dd>
+            <dt class="dt-tags">특징</dt><dd id="modal-tags"></dd>
+          </dl>
+        </section>
+
+        <section id="grid-episodes" class="grid-episodes" hidden></section>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
