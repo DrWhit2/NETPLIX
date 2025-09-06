@@ -1,10 +1,50 @@
-/* =========================
+/* ==================
    app.js — 홈/시리즈 + 모달 + 회차
    ========================= */
 
+/* ===== 경로/로더 유틸 (확장자 자동 탐색) ===== */
 const IMG_BASE = "images/";
-const posterUrl = f => IMG_BASE + f;
-const backdropUrl = f => IMG_BASE + f.replace(/(\.[a-zA-Z0-9]+)$/i, "_bg$1");
+const EXT_CANDIDATES = [".png", ".jpg", ".jpeg", ".webp"];
+
+const posterUrl = f => IMG_BASE + f; // 기본 포스터는 그대로 사용
+
+function backdropCandidates(file){
+  // "1.png" -> ["images/1_bg.png", "images/1_bg.jpg", ...]
+  const base = file.replace(/(\.[a-z0-9]+)$/i, "");
+  return EXT_CANDIDATES.map(ext => `${IMG_BASE}${base}_bg${ext}`);
+}
+function episodeThumbCandidates(itemFile, no){
+  // "1.png" + 2 -> ["images/1_ep2.png", "images/1_ep2.jpg", ...]
+  const base = itemFile.replace(/(\.[a-z0-9]+)$/i, "");
+  return EXT_CANDIDATES.map(ext => `${IMG_BASE}${base}_ep${no}${ext}`);
+}
+function tryLoad(url){
+  return new Promise((res, rej)=>{
+    const im = new Image();
+    im.onload = ()=>res(url);
+    im.onerror= ()=>rej(url);
+    im.src = url;
+  });
+}
+// <img>에 여러 후보 중 첫 번째로 성공하는 이미지를 넣음.
+// fallbackUrl이 있으면 후보가 전부 실패할 때 그걸로 넣음.
+async function preloadAndSwap(imgEl, candidates, fallbackUrl=null){
+  if(!imgEl) return;
+  imgEl.style.opacity = "0";
+  const list = Array.isArray(candidates) ? candidates : [candidates];
+  for(const url of list){
+    try{
+      const ok = await tryLoad(url);
+      imgEl.src = ok;
+      requestAnimationFrame(()=> imgEl.style.opacity = "1");
+      return;
+    }catch(_){ /* try next */ }
+  }
+  if(fallbackUrl){
+    imgEl.src = fallbackUrl;
+    imgEl.style.opacity = "1";
+  }
+}
 
 /* ====== 영화 데이터 ====== */
 const MOVIES = [
@@ -76,18 +116,6 @@ const overlay=$("#overlay"),
       modalTags=$("#modal-tags");
 
 /* ===== helper ===== */
-function preloadAndSwap(imgEl, preferredUrl, fallbackUrl){
-  if(!imgEl) return;
-  const tryLoad = url => new Promise((resolve,reject)=>{
-    const im=new Image(); im.onload=()=>resolve(url); im.onerror=()=>reject(); im.src=url;
-  });
-  imgEl.style.opacity="0";
-  return tryLoad(preferredUrl)
-    .catch(()=>tryLoad(fallbackUrl))
-    .then(final=>{ imgEl.src=final; requestAnimationFrame(()=> imgEl.style.opacity="1"); })
-    .catch(()=>{ imgEl.src=fallbackUrl; imgEl.style.opacity="1"; });
-}
-
 function card(m, opts={}){
   const btn=document.createElement("button");
   btn.className="card"; btn.type="button"; btn.title=m.title;
@@ -105,11 +133,15 @@ function renderRow(container, items, opts={}){
 function renderBanner(){
   const eq = MOVIES.find(x => normalize(x.title)===normalize("이퀄스")) || MOVIES[0];
   const poster = posterUrl(eq.file);
-  const bgTry  = backdropUrl(eq.file);
-  const probe=new Image();
-  probe.onload = ()=> banner.style.backgroundImage = `url(${bgTry})`;
-  probe.onerror= ()=> banner.style.backgroundImage = `url(${poster})`;
-  probe.src = bgTry;
+  const bgCandidates = backdropCandidates(eq.file);
+
+  (async ()=>{
+    let set = false;
+    for(const url of bgCandidates){
+      try{ await tryLoad(url); banner.style.backgroundImage = `url(${url})`; set = true; break; }catch(_){}
+    }
+    if(!set) banner.style.backgroundImage = `url(${poster})`;
+  })();
 
   bannerTitle.textContent = eq.title;
   bannerOverview.textContent = eq.overview;
@@ -162,7 +194,7 @@ const EPISODES = {
     { no: 2, duration: "51분", desc: "정체불명의 한 청년이 오디션에 등장한다. 목소리와 표정, 분위기까지 초대 오스월드 배우를 연상케 하는 완벽한 싱크로율. 그러나 스태프들은 왜인지 설명할 수 없는 불길함에 사로잡힌다." },
     { no: 4, duration: "52분", desc: "결국 오스월드 역에 발탁된 청년. 그는 촬영이 끝난 순간에도 캐릭터의 말투와 행동을 흉내 내며, 예기치 못한 기행으로 동료 배우들을 기겁하게 만든다. 카메라는 그의 이상 행동들을 포착해 나간다." },
     { no: 5, duration: "52분", desc: "그가 오스월드를 모욕하는 것처럼 들리는 대본을 수정해달라고 항의한 것도 수차례. 그는 단순 오스월드 캐릭터의 광팬인 것일까?" },
-   { no: 6, duration: "52분", desc: "돌연 경찰이 크레이브 엑스 촬영장에 들이닥친다. 검찰은 그를 초대 오스월드 배우 살해와 시신 유기 혐의로 기소했고, 갑작스러운 상황에 현장은 순식간에 아수라장이 된다." },
+    { no: 6, duration: "52분", desc: "돌연 경찰이 크레이브 엑스 촬영장에 들이닥친다. 검찰은 그를 초대 오스월드 배우 살해와 시신 유기 혐의로 기소했고, 갑작스러운 상황에 현장은 순식간에 아수라장이 된다." },
     { no: 7, duration: "54분", desc: " “오스월드 역”을 차지한 이 청년은 과연 누구이며, 그는 어떤 수법으로, 왜 초대 배우를 살해했는가. 드라마 제작기를 다루던 다큐멘터리는 법정 증언과 수사 기록을 토대로 범인의 실체를 파헤치는 프로그램으로 변모한다." }
   ],
   [normalize("멸망한 세계의 마지막 수신")]: [
@@ -184,15 +216,16 @@ function renderEpisodes(item, fromSeries){
   if(!fromSeries){ box.hidden=true; box.innerHTML=""; return; }
   const eps = EPISODES[normalize(item.title)] || [];
   if(!eps.length){ box.hidden=true; box.innerHTML=""; return; }
-  const thumb = posterUrl(item.file);
+
+  const poster = posterUrl(item.file);
   box.hidden=false;
   box.innerHTML = `
     <h4 class="sec-title">회차 <span class="season-badge">시즌 1</span></h4>
     <ol class="episodes">
       ${eps.map(ep => `
-        <li class="ep">
+        <li class="ep" data-no="${ep.no}">
           <div class="ep-no">${ep.no}</div>
-          <img class="ep-thumb" src="${thumb}" alt="${item.title} ${ep.no}화 썸네일">
+          <img class="ep-thumb" src="${poster}" alt="${item.title} ${ep.no}화 썸네일">
           <div class="ep-body">
             <div class="ep-title"><strong>${ep.no}화</strong><span class="ep-meta">${ep.duration}</span></div>
             <p class="ep-desc">${ep.desc}</p>
@@ -200,13 +233,27 @@ function renderEpisodes(item, fromSeries){
         </li>`).join("")}
     </ol>
   `;
+
+  // 각 회차 이미지: 1_ep{no}.(png|jpg|jpeg|webp) 순으로 탐색, 실패 시 포스터 유지
+  box.querySelectorAll(".ep").forEach(li=>{
+    const no = parseInt(li.dataset.no,10);
+    const img = li.querySelector(".ep-thumb");
+    const candidates = episodeThumbCandidates(item.file, no);
+    preloadAndSwap(img, candidates, poster);
+  });
 }
 
 /* ===== 모달 열기/닫기 ===== */
 let lastFocused=null;
 function openModal(m,{fromSeries=false}={}){
   lastFocused=document.activeElement;
-  preloadAndSwap(modalBackdrop, backdropUrl(m.file), posterUrl(m.file));
+
+  // 배경: 다양한 확장자 시도, 실패 시 포스터
+  preloadAndSwap(
+    modalBackdrop,
+    backdropCandidates(m.file),
+    posterUrl(m.file)
+  );
 
   modalTitle.textContent = m.title;
   modalMatch.textContent = `${m.match}% 일치`;
@@ -279,11 +326,16 @@ function renderSeries(){
   const info = document.getElementById("series-banner-info");
   if (sBanner && hero){
     const poster = posterUrl(hero.file);
-    const bgTry  = backdropUrl(hero.file);
-    const probe = new Image();
-    probe.onload = ()=> sBanner.style.backgroundImage = `url(${bgTry})`;
-    probe.onerror= ()=> sBanner.style.backgroundImage = `url(${poster})`;
-    probe.src = bgTry;
+    const bgCandidates = backdropCandidates(hero.file);
+
+    (async ()=>{
+      let set = false;
+      for(const url of bgCandidates){
+        try{ await tryLoad(url); sBanner.style.backgroundImage = `url(${url})`; set = true; break; }catch(_){}
+      }
+      if(!set) sBanner.style.backgroundImage = `url(${poster})`;
+    })();
+
     tEl.textContent = hero.title;
     oEl.textContent = hero.overview;
     mEl.textContent = `${hero.match}% 일치`;
