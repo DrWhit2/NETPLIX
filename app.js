@@ -192,7 +192,7 @@ const EPISODES = {
     { no: 4, duration: "52분", desc: "제작진은 결국 신인 배우 W와의 계약을 파기하고 초대 배우의 복귀를 요청한다. 그러나 돌아온 답은 단 하나 — 초대 배우가 실종됐다는 충격적인 소식뿐이다." },
     { no: 5, duration: "52분", desc: "돌연 경찰이 촬영장에 들이닥친다. 검찰은 W를 초대 오스월드 배우 살해와 시신 유기 혐의로 기소했고, 갑작스러운 상황에 현장은 순식간에 아수라장이 된다." },
     { no: 6, duration: "54분", desc: " “오스월드 역”을 차지한 이 W라는 청년은 과연 누구이며, 그는 어떤 수법으로, 왜 초대 배우를 살해했는가. 드라마 제작기를 다루던 다큐멘터리는 법정 증언과 수사 기록을 토대로 범인의 실체를 파헤치는 프로그램으로 변모한다." }
-  ]
+  ],
 };
 function renderEpisodes(item, fromSeries){
   const box = document.getElementById("grid-episodes");
