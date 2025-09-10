@@ -50,18 +50,18 @@ async function preloadAndSwap(imgEl, candidates, fallbackUrl=null){
 const MOVIES = [
   { title:"이퀄스", file:"a.png", match:92, year:2015, age:"15+", cast:["니콜라스 홀트","크리스틴 스튜어트"], genres:["SF","로맨스"], tags:["디스토피아","금지된 사랑"], overview:"모든 감정이 통제되고, 사랑이 범죄가 된 감정통제구역. 어느 날 동료의 죽음을 목격한 사일러스는 현장에서 니아의 미묘한 표정 변화를 보고 그녀가 감정보균자임을 알게 된다. 이에 사일러스는 생전 처음으로 낯선 감정을 느끼고 감정 억제 치료를 받지만, 그녀를 향한 마음은 점점 커져만 간다." },
   { title:"Us", file:"b.png", match:93, year:2019, age:"15+", cast:["루피타 뇽오","윈스턴 듀크"], genres:["호러","스릴러"], tags:["도플갱어","사회 풍자"], overview:"해변가로 휴가를 떠난 윌슨 가족 앞에 자기들과 똑같이 생긴 ‘도플갱어’ 가족이 나타난다. 자신과 똑 닮은 존재들의 침입과 폭력이 이어지며, 애들레이드는 묻어둔 과거의 진실과 마주하게 된다." },
-  { title:"퍼펙트 블루", file:"d.png", match:97, year:1997, age:18, cast:["이와마 사키","마츠모토 코헤이"], genres:["애니메이션","스릴러"], tags:["심리","호러"], overview:"아이돌을 그만두고 배우로 전향한 ‘미마’에게 또 하나의 자신, 미마가 나타난다. 미마는 결국 미쳐버린 것일까? 아니면 꿈일까? 세간을 떠들썩하게 한 연속살인 사건의 범인은 자신인 것일까? 애초에 '자신'은 누구일까? 미마는 점점 정체성을 잃어가게 되는데..." },
-  { title:"향수", file:"e.png", match:94, year:2006, age:18, cast:["벤 위쇼","알란 릭맨"], genres:["스릴러","드라마"], tags:["집착","범죄"], overview:"18세기 프랑스에 비상한 아이가 태어난다. 후각이 극도로 발달해 냄새만으로 사물을 구별하는 아이. 어느덧 청년으로 자란 그는 최고의 향수 제조사를 찾아가 사사를 청한다. 그의 목표는 하나. 매혹적인 향기를 영원히, 완벽하게 소유하는 것." },
-  { title:"블랙 스완", file:"h.png", match:95, year:2010, age:18, cast:["나탈리 포트만","밀라 쿠니스"], genres:["드라마","스릴러"], tags:["예술","심리"], overview:"“나는 완벽했어요.” 새롭게 해석된 [백조의 호수] 공연에서 순수하고 가녀린 백조와 관능적이고 도발적인 흑조, 1인 2역을 완벽하게 해내고 싶은 그녀의 욕망은 어느새 집착에 가깝게 변질되어가는데…" },
-  { title:"양들의 침묵", file:"j.png", match:99, year:1991, age:18, cast:["조디 포스터","안소니 홉킨스"], genres:["스릴러","범죄"], tags:["심리전","명작"], overview:"FBI 수습요원 ‘클라리스’는 연쇄살인마를 잡기 위해 수감 중인 범죄 심리학자 ‘한니발 렉터’에게 도움을 청한다. 렉터의 심리전 속에서 단서를 맞춰 나가며 클라리스는 범죄자와 자신 내면의 트라우마를 동시에 마주한다." },
+  { title:"퍼펙트 블루", file:"d.png", match:97, year:1997, age:"18+", cast:["이와마 사키","마츠모토 코헤이"], genres:["애니메이션","스릴러"], tags:["심리","호러"], overview:"아이돌을 그만두고 배우로 전향한 ‘미마’에게 또 하나의 자신, 미마가 나타난다. 미마는 결국 미쳐버린 것일까? 아니면 꿈일까? 세간을 떠들썩하게 한 연속살인 사건의 범인은 자신인 것일까? 애초에 '자신'은 누구일까? 미마는 점점 정체성을 잃어가게 되는데..." },
+  { title:"향수", file:"e.png", match:94, year:2006, age:"18+", cast:["벤 위쇼","알란 릭맨"], genres:["스릴러","드라마"], tags:["집착","범죄"], overview:"18세기 프랑스에 비상한 아이가 태어난다. 후각이 극도로 발달해 냄새만으로 사물을 구별하는 아이. 어느덧 청년으로 자란 그는 최고의 향수 제조사를 찾아가 사사를 청한다. 그의 목표는 하나. 매혹적인 향기를 영원히, 완벽하게 소유하는 것." },
+  { title:"블랙 스완", file:"h.png", match:95, year:2010, age:"18+", cast:["나탈리 포트만","밀라 쿠니스"], genres:["드라마","스릴러"], tags:["예술","심리"], overview:"“나는 완벽했어요.” 새롭게 해석된 [백조의 호수] 공연에서 순수하고 가녀린 백조와 관능적이고 도발적인 흑조, 1인 2역을 완벽하게 해내고 싶은 그녀의 욕망은 어느새 집착에 가깝게 변질되어가는데…" },
+  { title:"양들의 침묵", file:"j.png", match:99, year:1991, age:"18+", cast:["조디 포스터","안소니 홉킨스"], genres:["스릴러","범죄"], tags:["심리전","명작"], overview:"FBI 수습요원 ‘클라리스’는 연쇄살인마를 잡기 위해 수감 중인 범죄 심리학자 ‘한니발 렉터’에게 도움을 청한다. 렉터의 심리전 속에서 단서를 맞춰 나가며 클라리스는 범죄자와 자신 내면의 트라우마를 동시에 마주한다." },
   { title:"A.I.", file:"k.png", match:89, year:2001, age:"12+", cast:["헤일리 조엘 오스먼트","주드 로"], genres:["SF","드라마"], tags:["휴머니즘","미래"], overview:"가까운 미래, 감정을 느끼도록 설계된 인조 소년 데이비드가 인간 부부의 집에 입양된다. 그는 ‘엄마’의 사랑을 되찾기 위한 여정을 떠나며 인간성과 사랑의 의미를 묻는다." },
-  { title:"터스크", file:"m.png", match:84, year:2014, age:18, cast:["저스틴 롱","마이클 파크스"], genres:["호러"], tags:["기괴","블랙코미디"], overview:"팟캐스터 월레스는 취재차 캐나다에 갔다가, 기묘한 전단을 따라 외딴 집의 노인 하워드를 찾아간다. 하워드는 매혹적인 항해담으로 월레스를 방심시킨 뒤 감금하고, 과거의 집착을 투사해 그를 ‘바다코끼리’로 개조하려는 광기 어린 수술을 시작한다." },
+  { title:"터스크", file:"m.png", match:84, year:2014, age:"18+", cast:["저스틴 롱","마이클 파크스"], genres:["호러"], tags:["기괴","블랙코미디"], overview:"팟캐스터 월레스는 취재차 캐나다에 갔다가, 기묘한 전단을 따라 외딴 집의 노인 하워드를 찾아간다. 하워드는 매혹적인 항해담으로 월레스를 방심시킨 뒤 감금하고, 과거의 집착을 투사해 그를 ‘바다코끼리’로 개조하려는 광기 어린 수술을 시작한다." },
   { title:"숨바꼭질", file:"n.png", match:85, year:2005, age:"15+", cast:["로버트 드 니로","다코타 패닝"], genres:["스릴러"], tags:["가족","심리"], overview:"우리 집에 나 말고 다른 사람이 살고 있다! 형의 아파트를 뒤로한 채 자신의 안락한 집으로 돌아온 그 날, ‘성수’는 형의 아파트에서 봤던 암호가 자신의 집 초인종 옆에서 새겨진 것을 발견한다. 아파트의 암호를 찬찬히 살펴보던 그는 그것이 집에 사는 사람의 성별과 수를 뜻하는 것을 알게 된다." },
   { title:"오펀: 천사의 아이", file:"o.png", match:86, year:2009, age:"15+", cast:["베라 파미가","이사벨 퍼만"], genres:["호러","스릴러"], tags:["충격 반전"], overview:"입양을 결심한 케이트와 존은 고아원에서 성숙하고 예의 바른 아홉 살 소녀 에스더를 데려온다. 하지만 집에 온 뒤로 사고와 불행이 잇따르며, 케이트는 아이의 말과 행동에서 설명하기 힘든 불길함을 감지한다." },
   { title:"비바리움", file:"p.png", match:87, year:2019, age:"15+", cast:["이모겐 푸츠","제시 아이젠버그"], genres:["SF","스릴러"], tags:["디스토피아","폐쇄공간"], overview:"집을 보러 간 커플은 모든 집이 똑같은 미로 같은 신도시에 갇힌다. 어떤 방향으로 향해도 집 앞에 다다르는 이 네모반듯한 곳에서 다른 선택지는 없다, 오직 살아갈 뿐! 탈출이 불가능한 상황에서 둘은 정체불명의 아이까지 키우게 되며, 일상은 점차 괴랄하게 변해 간다." },
-  { title:"엑스 마키나", file:"q.png", match:95, year:2014, age:18, cast:["알리시아 비칸데르","도널 글리슨"], genres:["SF","스릴러"], tags:["AI","철학"], overview:"거대 기업의 개발자 네이든은 직원 칼렙에게 여성형 AI ‘에이바’의 테스트를 맡긴다. 둘은 그녀의 인격과 감정이 진짜인지 아니면 프로그래밍 된 것인 지를 밝히는 테스트를 진행하지만 아직은 모든 것이 의심스럽기만 하다." },
-  { title:"케빈에 대하여", file:"r.png", match:88, year:2011, age:18, cast:["틸다 스윈튼","에즈라 밀러"], genres:["드라마","스릴러"], tags:["가족","비극"], overview:"악은 타고나는가, 길러지는가? 모성애는 과연 인간의 본성인가? 여행을 사랑하던 자유분방한 여성 에바는 아들 케빈을 낳은 뒤 삶이 송두리째 바뀐다. 케빈은 어린 시절부터 이유를 알 수 없는 적대심과 불안정한 기질을 드러내며, 모자 관계는 갈수록 파국으로 치닫게 되는데... " },
-  { title:"써클", file:"s.png", match:83, year:2015, age:18, cast:["줄리 벤즈","카터 젠킨스"], genres:["SF","스릴러"], tags:["사회실험","심리"], overview:"당신에게는 생존할 가치가 있습니까? 어두운 방 안, 50명의 사람이 각자 빨간 원을 디딘 채로 서있다. 오로지 대화만이 허용된 이곳에서 이들은 2분마다 다수결로 죽을 사람을 투표로 선출해야 한다. 생존을 위한 설득과 논쟁, 차별과 도덕이 뒤엉킨 끝에 마지막 선택이 다가온다." },
+  { title:"엑스 마키나", file:"q.png", match:95, year:2014, age:"18+", cast:["알리시아 비칸데르","도널 글리슨"], genres:["SF","스릴러"], tags:["AI","철학"], overview:"거대 기업의 개발자 네이든은 직원 칼렙에게 여성형 AI ‘에이바’의 테스트를 맡긴다. 둘은 그녀의 인격과 감정이 진짜인지 아니면 프로그래밍 된 것인 지를 밝히는 테스트를 진행하지만 아직은 모든 것이 의심스럽기만 하다." },
+  { title:"케빈에 대하여", file:"r.png", match:88, year:2011, age:"18+", cast:["틸다 스윈튼","에즈라 밀러"], genres:["드라마","스릴러"], tags:["가족","비극"], overview:"악은 타고나는가, 길러지는가? 모성애는 과연 인간의 본성인가? 여행을 사랑하던 자유분방한 여성 에바는 아들 케빈을 낳은 뒤 삶이 송두리째 바뀐다. 케빈은 어린 시절부터 이유를 알 수 없는 적대심과 불안정한 기질을 드러내며, 모자 관계는 갈수록 파국으로 치닫게 되는데... " },
+  { title:"써클", file:"s.png", match:83, year:2015, age:"18+", cast:["줄리 벤즈","카터 젠킨스"], genres:["SF","스릴러"], tags:["사회실험","심리"], overview:"당신에게는 생존할 가치가 있습니까? 어두운 방 안, 50명의 사람이 각자 빨간 원을 디딘 채로 서있다. 오로지 대화만이 허용된 이곳에서 이들은 2분마다 다수결로 죽을 사람을 투표로 선출해야 한다. 생존을 위한 설득과 논쟁, 차별과 도덕이 뒤엉킨 끝에 마지막 선택이 다가온다." },
   { title:"가타카", file:"t.png", match:94, year:1997, age:"15+", cast:["이선 호크","우마 서먼"], genres:["SF","드라마"], tags:["유전","운명"], overview:"타고난 유전적 성향이 사회에서의 지위를 결정하는 미래 사회. 자연 출생으로 태어난 빈센트는 열성 유전자로 인해 차별받으며, 우주 비행사의 꿈조차 허락되지 않는다. 그러나 그는 사고로 불구가 된 ‘완벽한 유전자’의 소유자 제롬의 신분을 빌려, 가타카 항공우주국에 입사한다. 정체가 발각될 위기 속에서도 빈센트는 끝내 자신의 의지와 노력만으로 별을 향한 길에 다가가며, 인간의 한계와 가능성을 증명한다." },
   { title:"Capsules", file:"u.png", match:88, year:2022, age:"15+", cast:["Dust"], genres:["단편","SF"], tags:["감성"], overview:"감정을 느끼기 위해 캡슐을 복용하는 세상. 한 쌍의 커플은 ‘사랑’ 캡슐을 함께 복용하며 서로의 마음을 확인한다. 그러나 시간이 흐르면서, 그들은 점차 캡슐의 약효가 희미해지고 있음을 깨닫게 되는데..." }
 ];
@@ -70,7 +70,9 @@ const MOVIES = [
 const SERIES = [
   { title:"Rabid Rabbit", file:"1.png", match:92, year:2015, age:"19+", genres:["좀아포, 하이틴"], overview:"금발의 치어리더 '아일리'는 과학자 '오스월드 화이트'를 납치해, 자신의 반려 토끼를 불사신으로 만들 것을 강요한다. 그리고 오스월드의 손끝에서 되살아난 토끼는 피투성이 좀비가 되어, 런던 교정을 시작으로 영국 전역을 파멸 속에 몰아넣는데..." },
   { title:"크레이브 엑스 - 오프 더 레코드 1", file:"2.png", match:90, year:2017, age:"15+", genres:["오프더레코드, 현실다큐"], overview:"〈크레이브 엑스〉 촬영 초반, 오스월드 역의 배우가 돌연 하차하며 제작팀은 패닉에 빠진다. 감독은 급히 스태프의 딸 이자벨을 투입해 “오스월드가 변장했다”는 억지 설정을 덧붙이는데... 과연 이 드라마는 무사히 방영될 수 있을까?" },
-  { title:"크레이브 엑스 - 오프 더 레코드 2", file:"3.png", match:90, year:2025, age:"19+", genres:["현실다큐, 범죄기록"], overview:"〈크레이브 엑스〉 촬영은 막바지에 접어든다. 오스월드의 변장 설정에 대한 대중들의 반응은 여전히 싸늘하다. 그때, 정체불명의 한 신인 배우가 오스월드 역에 자원한다. 완벽해 보이는 그의 연기 뒤로 현장은 알 수 없는 불길함에 휩싸인다." },
+  { title:"크레이브 엑스 - 오프 더 레코드 2", file:"3.png", match:90, year:2025, age:"19+", genres:["현실다큐, 범죄기록"], overview:"〈크레이브 엑스〉 촬영은 막바지에 접어든다. 오스월드의 변장 설정에 대한 대중들의 반응은 여전히 싸늘하다. 그때, 정체불명의 한 신인 배우가 오스월드 역에 자원한다. 완벽해 보이는 그의 연기 뒤로 현장은 알 수 없는 불길함에 휩싸인다." }
+]; // ★★ 반드시 닫아주세요 ★★
+
 /* ===== 공통 유틸 ===== */
 const normalize = s => s.toLowerCase().replace(/\s+/g,'').replace(/[.\u3002]/g,''); 
 const TITLE_ALIAS = { "어스": "Us" };
@@ -145,8 +147,8 @@ function renderBanner(){
   bannerYear.textContent  = eq.year;
   bannerAge.textContent   = eq.age;
 
-  bannerInfoBtn?.addEventListener("click", ()=>openModal(eq,{fromSeries:false}));
-  bannerPlayBtn?.addEventListener("click", ()=>openModal(eq,{fromSeries:false}));
+  if (bannerInfoBtn) bannerInfoBtn.onclick = ()=>openModal(eq,{fromSeries:false});
+  if (bannerPlayBtn) bannerPlayBtn.onclick = ()=>openModal(eq,{fromSeries:false});
 }
 
 /* ===== 별점(고정) ===== */
@@ -239,37 +241,37 @@ function openModal(m,{fromSeries=false}={}){
     posterUrl(m.file)
   );
 
-  modalTitle.textContent = m.title;
-  modalMatch.textContent = `${m.match}% 일치`;
-  modalYear.textContent  = m.year;
-  modalAge.textContent   = m.age;
-  modalOverview.textContent = m.overview;
+  if (modalTitle) modalTitle.textContent = m.title;
+  if (modalMatch) modalMatch.textContent = `${m.match}% 일치`;
+  if (modalYear)  modalYear.textContent  = m.year;
+  if (modalAge)   modalAge.textContent   = m.age;
+  if (modalOverview) modalOverview.textContent = m.overview;
 
   // 장르 표시
-  modalGenres.textContent = (m.genres||[]).join(", ");
+  if (modalGenres) modalGenres.textContent = Array.isArray(m.genres) ? m.genres.join(", ") : (m.genres || "");
 
   if(fromSeries){
     // 시리즈: '장르'만 남기고 출연/특징 완전 숨김
-    modalCast.textContent = "";
-    modalCast.style.display = "none";
+    if (modalCast){ modalCast.textContent = ""; modalCast.style.display = "none"; }
     document.querySelector(".dt-cast")?.classList.add("hidden");
 
-    modalTags.textContent = "";
-    modalTags.style.display = "none";
+    if (modalTags){ modalTags.textContent = ""; modalTags.style.display = "none"; }
     document.querySelector(".dt-tags")?.classList.add("hidden");
   }else{
     // 영화(홈): 출연/특징 보이기
-    modalCast.textContent = (m.cast||[]).join(", ");
+    if (modalCast){ modalCast.textContent = (m.cast||[]).join(", "); modalCast.style.display = ""; }
     document.querySelector(".dt-cast")?.classList.remove("hidden");
-    modalCast.style.display = "";
 
-    modalTags.textContent = (m.tags||[]).join(", ");
+    if (modalTags){ modalTags.textContent = (m.tags||[]).join(", "); modalTags.style.display = ""; }
     document.querySelector(".dt-tags")?.classList.remove("hidden");
-    modalTags.style.display = "";
   }
 
   const topRow = document.getElementById("grid-top");
-  if(topRow){ topRow.innerHTML = ""; topRow.hidden = !!fromSeries; if(!fromSeries) topRow.appendChild( makeRatingBar(m.title) ); }
+  if(topRow){
+    topRow.innerHTML = "";
+    topRow.hidden = !!fromSeries;
+    if(!fromSeries) topRow.appendChild( makeRatingBar(m.title) );
+  }
 
   renderEpisodes(m, fromSeries);
 
@@ -320,13 +322,13 @@ function renderSeries(){
       if(!set) sBanner.style.backgroundImage = `url(${poster})`;
     })();
 
-    tEl.textContent = hero.title;
-    oEl.textContent = hero.overview;
-    mEl.textContent = `${hero.match}% 일치`;
-    yEl.textContent = hero.year;
-    aEl.textContent = hero.age;
-    play?.addEventListener("click", ()=>openModal(hero,{fromSeries:true}));
-    info?.addEventListener("click", ()=>openModal(hero,{fromSeries:true}));
+    if (tEl) tEl.textContent = hero.title;
+    if (oEl) oEl.textContent = hero.overview;
+    if (mEl) mEl.textContent = `${hero.match}% 일치`;
+    if (yEl) yEl.textContent = hero.year;
+    if (aEl) aEl.textContent = hero.age;
+    if (play) play.onclick = ()=>openModal(hero,{fromSeries:true});
+    if (info) info.onclick = ()=>openModal(hero,{fromSeries:true});
   }
   renderRow(seriesGrid, SERIES, {fromSeries:true});
 }
@@ -348,8 +350,8 @@ function initProfile(){
   const app = document.getElementById("app");
   document.querySelectorAll(".profile").forEach(p=>{
     p.addEventListener("click", ()=>{
-      profileScreen.style.display="none";
-      app.hidden=false;
+      if (profileScreen) profileScreen.style.display="none";
+      if (app) app.hidden=false;
       showHome();
       renderHome();
       renderSeries();
